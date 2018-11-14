@@ -1,0 +1,26 @@
+{
+  "name": "enigma-machine",
+  "version": "1.0.0",
+  "description": "enigmaMachine",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "node": "nodemon --watch dev -e js dev/start.js 3002 http://localhost:3002",
+    "start": "node dev/start.js"
+  },
+  "author": "Mor Cohen",
+  "license": "ISC",
+  "dependencies": {
+    "async-profile": "^0.4.0",
+    "body-parser": "^1.18.3",
+    "browserify": "^16.2.3",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.4",
+    "babel-register": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": "8.12.0"
+  }
+}

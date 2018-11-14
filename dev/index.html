@@ -1,0 +1,415 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Enigma M3</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/styles/bootstrap/bootstrap.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+
+
+    <link rel="stylesheet" href="/styles/helpers.css">
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/landing-2.css">
+
+</head>
+<body data-spy="scroll" data-target="#pb-navbar" data-offset="200" dir="rtl" ng-app="Enigma">
+    <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
+        <div class="container">
+            <a class="navbar-brand" style="padding-bottom: 10%;"><img src="/styles/logo.png"><img /></a>
+            <div class="collapse navbar-collapse" id="probootstrap-navbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0" style="padding-top: 5%;"><a class="nav-link" href="http://morc.io/"><span class="pb_rounded-4 px-4" style="color: #fff">בטיחות תוכנה | עבודה 1 | מור כהן</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-right pb_gradient_v3 pb_slant-light" style="padding-top: 8%" ng-controller="plugBoardController">
+
+        <div class="container">
+            <form>
+                <div class="row align-items-center justify-content-center">
+                    <div class="container" style="padding-bottom: 30%;">
+                        <div class="container" style="padding: 15px;">
+                            <p>
+                                <a id="modal1" href="#" data-toggle="modal" data-target="#PlugBoardModal"><span style="color: #fff">הגדר PlugBoard <i class="fas fa-cogs"></i></span></a>
+                            </p>
+                            <span style="color: #fff" ng-show="plugBoardDisplay"><mark>Plug Board הוגדר כ: {{pbd}}</mark></span>
+                            <a href="#" style="color: #fff" ng-show="plugBoardDisplay" ng-click="count('')">איפוס</a>
+                        </div>
+                        <div class="row align-items-center justify-content-center">
+                            <!--rotor1-->
+                            <div class="col-sm">
+                                <div class="bg-white rounded pb_form_v1" style="padding-right: 18%;">
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorRight" style="padding-top:7%;">רוטור ימני:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="rotorRight" ng-model="rotorRight">
+                                                <option value="I">I</option>
+                                                <option value="II">II</option>
+                                                <option value="III">III</option>
+                                                <option value="IV">IV</option>
+                                                <option value="V">V</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorRightSetting" style="padding-top:7%;">ring setting:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="rotorRightSetting" ng-options="(sortBy.indexOf(selectedItem)+1) as selectedItem for selectedItem in sortBy" ng-model="rotorRightSetting"></select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
+                                                <li>{{letter}}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col">
+                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
+                                                <li>{{letter}}</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorRightOffset" style="padding-top:7%;">ring offset:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" ng-options="(sortBy.indexOf(selectedItem)+1) as selectedItem for selectedItem in sortBy" id="rotorRightOffset" ng-model="rotorRightOffset"></select>
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+                                </div>
+                            </div>
+
+                            <!--rotor2-->
+                            <div class="col-sm">
+                                <div class="bg-white rounded pb_form_v1" style="padding-right: 18%;">
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorMiddle" style="padding-top:7%;">רוטור אמצעי:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="rotorMiddle" ng-model="rotorMiddle">
+                                                <option value="I">I</option>
+                                                <option value="II">II</option>
+                                                <option value="III">III</option>
+                                                <option value="IV">IV</option>
+                                                <option value="V">V</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorMiddleSetting" style="padding-top:7%;">ring setting:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="rotorMiddleSetting" ng-options="(sortBy.indexOf(selectedItem)+1) as selectedItem for selectedItem in sortBy" ng-model="rotorMiddleSetting"></select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
+                                                <li>{{letter}}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col">
+                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
+                                                <li>{{letter}}</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorMiddleOffset" style="padding-top:7%;">ring offset:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="rotorMiddleOffset" ng-options="(sortBy.indexOf(selectedItem)+1) as selectedItem for selectedItem in sortBy" ng-model="rotorMiddleOffset"></select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <!--rotor3-->
+                            <div class="col-sm">
+                                <div class="bg-white rounded pb_form_v1" style="padding-right: 18%;">
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorLeft" style="padding-top:7%;">רוטור שמאלי:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="rotorLeft" ng-model="rotorLeft">
+                                                <option value="I">I</option>
+                                                <option value="II">II</option>
+                                                <option value="III">III</option>
+                                                <option value="IV">IV</option>
+                                                <option value="V">V</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorLeftSetting" style="padding-top:7%;">ring setting:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="rotorLeftSetting" ng-options="(sortBy.indexOf(selectedItem)+1) as selectedItem for selectedItem in sortBy" ng-model="rotorLeftSetting"></select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
+                                                <li>{{letter}}</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col">
+                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
+                                                <li>{{letter}}</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col"><label class="my-1 mr-2" for="rotorLeftOffset" style="padding-top:7%;">ring offset:</label></div>
+                                        <div class="col">
+                                            <select class="custom-select my-1 mr-sm-2" id="rotorLeftOffset" ng-options="(sortBy.indexOf(selectedItem)+1) as selectedItem for selectedItem in sortBy" ng-model="rotorLeftOffset"></select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <p style="color: #fff; font-style: italic; padding-top: 2%;">טקסט להצפנה: </p>
+                        <div class="row">
+                            <div class="col-11">
+                                <div>
+                                    <input type="text" class="form-control mb-2" ng-model="plainText">
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <button type="submit" class="btn btn-primary mb-2" ng-click="encrypt(rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText)">הצפן</button>
+                            </div>
+                        </div>
+                        <div>
+                            <input type="text" class="form-control mb-2" style="font-size: medium" placeholder="{{encryptedMessage}}" disabled>
+                        </div>
+                    </div>
+
+                </div>
+            
+            </form>
+            
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade text-center py-5" id="PlugBoardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" dir="ltr">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="top-strip"></div>
+                        <h3 class="pt-5 mb-0 text-secondary">Plug Board</h3>
+                        <span class="pb-1 text-muted"><small>הזן אות עבור כל פלאג שברצונך להחליף - 10 לכל היותר</small></span><br />
+                        <span class="pb-1 text-muted"><small>אותיות קטנות יתורגמו לאותיות גדולות אוטומטית</small></span><br />
+                        
+                        <form name="validPlugBoard">
+
+                            <div class="row" style="padding-right: 5%;">
+                                <div class="col">
+                                    <div class="row" style="padding-bottom: 2%;">
+                                        <div class="col" style="padding-left: 30%;">I</div>
+                                        <div class="col"><input type="text" name="I"  ng-model="I" ></div>
+
+                                    </div>
+                                    <div class="row" style="padding-bottom: 2%;">
+                                        <div class="col" style="padding-left: 30%;">II</div>
+                                        <div class="col"><input type="text" ng-model="II"></div>
+                                    </div>
+                                    <div class="row" style="padding-bottom: 2%;">
+                                        <div class="col" style="padding-left: 30%;">III</div>
+                                        <div class="col"><input type="text" ng-model="III"></div>
+                                    </div>
+                                    <div class="row" style="padding-bottom: 2%;">
+                                        <div class="col" style="padding-left: 30%;">IV</div>
+                                        <div class="col"><input type="text" ng-model="IV"></div>
+                                    </div>
+                                    <div class="row" style="padding-bottom: 2%;">
+                                        <div class="col" style="padding-left: 30%;">V</div>
+                                        <div class="col"><input type="text" ng-model="V"></div>
+                                    </div>
+
+                                </div>
+                                <div class="col">
+                                    <div class="col">
+                                        <div class="row" style="padding-bottom: 2%;">
+                                            <div class="col">VI</div>
+                                            <div class="col" style="padding-right: 30%;"><input type="text" ng-model="VI"></div>
+                                        </div>
+                                        <div class="row" style="padding-bottom: 2%;">
+                                            <div class="col">VII</div>
+                                            <div class="col" style="padding-right: 30%;"><input type="text" ng-model="VII"></div>
+                                        </div>
+                                        <div class="row" style="padding-bottom: 2%;">
+                                            <div class="col">VIII</div>
+                                            <div class="col" style="padding-right: 30%;"><input type="text" ng-model="VIII"></div>
+                                        </div>
+                                        <div class="row" style="padding-bottom: 2%;">
+                                            <div class="col">IX</div>
+                                            <div class="col" style="padding-right: 30%;"><input type="text" ng-model="IX"></div>
+                                        </div>
+                                        <div class="row" style="padding-bottom: 2%;">
+                                            <div class="col">X</div>
+                                            <div class="col" style="padding-right: 30%;"><input type="text" ng-model="X"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-auto">
+                                <button type="submit" data-dismiss="modal" aria-label="Close" class="btn btn-primary mb-2" ng-click="count([I,II,III,IV,V,VI,VII,VIII,IX,X])">בצע</button>
+                            </div>
+
+                        </form>
+
+
+                        <div class="bottom-strip"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <!-- END section -->
+
+
+
+
+    <footer class="pb_footer bg-light" role="contentinfo">
+        <div class="container">
+
+            <div class="row">
+                <div class="col text-center">
+                    <p class="pb_font-14">
+                        <a href="index.html">Enigma M3</a>
+                        <br>
+                        תוכנת ועוצב ע"י מור כהן - <a href="http://morc.io/">תיק עבודות</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script>
+        window.app = angular.module('Enigma', []);
+        app.controller('plugBoardController', function ($scope, $http) {
+
+            $scope.sortBy = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+            $scope.plugBoardArray = [];
+            $scope.plugBoardDisplay = false;
+            $scope.pbd = null;
+            $scope.count = function (pair) {
+                $scope.plugBoardArray = [];
+                if (pair === '')
+                    $scope.excecute($scope.plugBoardArray);
+                else {
+                    
+                    for (let x = 0; x < pair.length; x++) {
+                        if (pair[x] !== undefined && (pair[x][0] === undefined || pair[x][1] === undefined || ((pair[x][0].toUpperCase().charCodeAt(0)) - 65) < 0 || ((pair[x][0].toUpperCase().charCodeAt(0)) - 65) > 25 || ((pair[x].toUpperCase()[1].charCodeAt(0)) - 65) < 0 || ((pair[x].toUpperCase()[1].charCodeAt(0)) - 65) > 25 || pair[x].length > 2)) {
+                            alert(`הפרמטר ${pair[x]} שגוי - נסה שוב`);
+                            return;
+                        }
+                        if (pair[x] !== undefined) {
+                            $scope.plugBoardArray.push(pair[x].toUpperCase());
+                            $scope.excecute($scope.plugBoardArray);
+                        }
+                    }
+                }
+                
+            };
+            $scope.excecute = function (pb) {
+                console.log(pb);
+                
+                $http({
+                    url: '/setPlugBoard',
+                    method: "POST",
+                    data: {
+                        "plugBoard": pb
+                    }
+                }).then(function (response) {
+                    
+                    $scope.plugBoardDisplay = true;
+                    if (response.data.plugBoard == [])
+                        $scope.plugBoardDisplay = false;
+                    $scope.pbd = response.data.plugBoard;
+                },
+                    function (response) {
+                    });
+            }
+            $scope.encryptedMessage = 'כאן יופיע הטקסט לאחר הצפנה';
+            $scope.encrypt = function(rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText){
+                
+                console.log(rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText);
+                console.log($scope.plugBoardArray);
+
+                $http({
+                    url: '/initEnigma',
+                    method: "POST",
+                    data: {
+                        "plugBoard": $scope.plugBoardArray,
+                        "rotors": {
+                            rotor_1: { type: rotorRight, ring_offset: rotorRightOffset, setting: rotorRightSetting },
+                            rotor_2: { type: rotorMiddle, ring_offset: rotorMiddleOffset, setting: rotorMiddleSetting },
+                            rotor_3: { type: rotorLeft, ring_offset: rotorLeftOffset, setting: rotorLeftSetting },
+                        },
+                        "plainText": plainText
+                    }
+                }).then(function (response) {
+                    $scope.encryptedMessage = response.data.encryptedMessage;
+                },
+                    function (response) {
+                    });
+
+
+            }
+        });
+        </script>
+
+
+</body >
+</html >

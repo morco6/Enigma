@@ -1,0 +1,3 @@
+C:\Users\morco_000\Documents\Visual Studio 2017\Projects\enigmaMachine\enigmaMachine\obj\Debug\enigmaMachine.njsprojAssemblyReference.cache
+C:\Users\morco_000\Documents\Visual Studio 2017\Projects\enigmaMachine\enigmaMachine\obj\Debug\enigmaMachine.njsproj.CoreCompileInputs.cache
+C:\Users\morco_000\Documents\Visual Studio 2017\Projects\enigmaMachine\enigmaMachine\bin\Microsoft.NodejsTools.WebRole.dll
