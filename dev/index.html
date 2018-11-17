@@ -44,7 +44,7 @@
 
             <form>
                 <div id="form" class="row align-items-center justify-content-center">
-                    <div class="container" style="padding-bottom: 30%;">
+                    <div class="container" style="padding-top: 5%;">
                         <div class="container" style="padding: 15px;">
                             <p>
                                 <a id="modal1" href="#" data-toggle="modal" data-target="#PlugBoardModal"><span style="color: #fff">הגדר PlugBoard <i class="fas fa-cogs"></i></span></a>
@@ -80,11 +80,29 @@
                                         </div>
 
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col">
+                                            <p><small>מקבל מהפלאג בורד: {{proc.pb}}</small></p>
+                                        </div>
+                                        <div class="col">
+                                            <p style="color: #ff7d00"><small>בחזרה מרוטור אמצעי: {{proc.rev_out_m}}</small></p>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <ul class="col-1" style="font-size: x-small;" id="{{letter+'r'}}" ng-repeat="letter in sortBy">
                                             <li>{{letter}}</li>
                                         </ul>
+                                    </div>
+
+                                    
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <p><small>שולח לרוטור אמצעי: {{proc.out_r}}</small></p>
+                                        </div>
+                                        <div class="col">
+                                            <p style="color: #ff7d00"><small>שולח לפלאג בורד: {{proc.rev_out_r}}</small></p>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -126,10 +144,30 @@
 
                                     </div>
 
+
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <p><small>מקבל מרוטור ימני: {{proc.out_r}}</small></p>
+                                        </div>
+                                        <div class="col">
+                                            <p style="color: #ff7d00"><small>בחזרה מרוטור שמאלי: {{proc.rev_out_l}}</small></p>
+                                        </div>
+                                    </div>
+
                                     <div class="row">
                                         <ul class="col-1" style="font-size: x-small;" id="{{letter+'m'}}" ng-repeat="letter in sortBy">
                                             <li>{{letter}}</li>
                                         </ul>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <p><small>שולח לרוטור שמאלי: {{proc.out_m}}</small></p>
+                                        </div>
+                                        <div class="col">
+                                            <p style="color: #ff7d00"><small>שולח לרוטור ימני: {{proc.rev_out_m}}</small></p>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -169,10 +207,29 @@
 
                                     </div>
 
+
+                                    <div class="row">
+                                        <div class="col">
+                                            <p><small>מקבל מרוטור אמצעי: {{proc.out_m}}</small></p>
+                                        </div>
+                                        <div class="col">
+                                            <p style="color: #ff7d00"><small>בחזרה מהרפלקטור: {{proc.ref}}</small></p>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <ul class="col-1" style="font-size: x-small;" id="{{letter+'l'}}" ng-repeat="letter in sortBy">
                                             <li>{{letter}}</li>
                                         </ul>
+                                    </div>
+
+                                    
+                                    <div class="row">
+                                        <div class="col">
+                                            <p><small>שולח לרפלקטור: {{proc.out_l}}</small></p>
+                                        </div>
+                                        <div class="col">
+                                            <p style="color: #ff7d00"><small>שולח לרוטור אמצעי: {{proc.rev_out_l}}</small></p>
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -368,12 +425,13 @@
                     });
             }
 
-            $scope.con = function (sourceLetter, targetLetter, position, instance) {
+            $scope.con = function (sourceLetter, targetLetter, position, instance, color) {
                 instance.connect({
                     source: sourceLetter + position,
                     target: targetLetter + position,
                     endpoint: "Blank",
-                    anchors: ["Center", "Center"]
+                    anchors: ["Center", "Center"],
+                    paintStyle: { stroke: color}
 
                 });
             }
@@ -432,10 +490,33 @@
                                 curviness: 5
                             }]
                         });
-                        $scope.con($scope.proc.rr, $scope.proc.rl, 'r', instance);
-                        $scope.con($scope.proc.mr, $scope.proc.ml, 'm', instance1);
-                        $scope.con($scope.proc.lr, $scope.proc.ll, 'l', instance2);
+                        $scope.con($scope.proc.rr, $scope.proc.rl, 'r', instance, "purple");
+                        $scope.con($scope.proc.mr, $scope.proc.ml, 'm', instance1, "purple");
+                        $scope.con($scope.proc.lr, $scope.proc.ll, 'l', instance2, "purple");
 
+                        var rev_instance = jsPlumb.getInstance();
+                        rev_instance.importDefaults({
+                            Connector: ["Bezier", {
+                                curviness: 5
+                            }]
+                        });
+
+                        var rev_instance1 = jsPlumb.getInstance();
+                        rev_instance1.importDefaults({
+                            Connector: ["Bezier", {
+                                curviness: 5
+                            }]
+                        });
+
+                        var rev_instance2 = jsPlumb.getInstance();
+                        rev_instance2.importDefaults({
+                            Connector: ["Bezier", {
+                                curviness: 5
+                            }]
+                        });
+                        $scope.con($scope.proc.rev_rl, $scope.proc.rev_rr, 'r', rev_instance, "orange");
+                        $scope.con($scope.proc.rev_ml, $scope.proc.rev_mr, 'm', rev_instance1, "orange");
+                        $scope.con($scope.proc.rev_ll, $scope.proc.rev_lr, 'l', rev_instance2, "orange");
 
                     });
                 },
