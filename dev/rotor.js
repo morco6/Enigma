@@ -77,6 +77,14 @@ export class Rotor extends Translator {
             if (rotorName === 3)
                 obj.proc.lr = tmp;
         }
+        else {
+            if (rotorName === 1)
+                obj.proc.rev_rl = tmp;
+            if (rotorName === 2)
+                obj.proc.rev_ml = tmp;
+            if (rotorName === 3)
+                obj.proc.rev_ll = tmp;
+        }
         new_letter = rotor_map[new_letter - 1];
 
         console.log('new letter: ' + new_letter);
@@ -89,7 +97,6 @@ export class Rotor extends Translator {
 
         let b = ring_offset;   
         let new_letter = pos - b;
-        //console.log('NEWLETTER: ' + new_letter);
         
         new_letter += (ring_setting);
         
@@ -99,7 +106,6 @@ export class Rotor extends Translator {
             new_letter %= 26;
         
         new_letter = String.fromCharCode(65 + new_letter - 1);
-        console.log('new letter: ' + new_letter);
         return new_letter;
     }
 
@@ -130,29 +136,44 @@ export class Rotor extends Translator {
                 obj.proc.out_l = new_letter;
             obj.letter = new_letter;
         }
-       else {//reverse
-           let b = ring_offset; 
-           obj = this.p(obj, ring_offset, ring_setting, rotor_map, rotorName);
-           console.log('reverse: ' + obj.letter);
-           let p = rotor_map.indexOf(obj.letter) + 1;
+        else {//reverse
+            let b = ring_offset;
+            obj = this.p(obj, ring_offset, ring_setting, rotor_map, rotorName);
 
-           console.log('p: ' + p);
-           let index = String.fromCharCode(65 + p - 1);
-           index = ((index.charCodeAt(0)) - 65) + 1;
-           index = String.fromCharCode(65 + index - 1);
-           index = rotor_map.indexOf(index)+1;
-           console.log('index: ' + index);
+            
+            //console.log('reverse: ' + obj.letter);
+            let p = rotor_map.indexOf(obj.letter) + 1;
 
-           index -= b;
-           index += (ring_setting);
+            //console.log('p: ' + p);
+            let index = String.fromCharCode(65 + p - 1);
+            index = ((index.charCodeAt(0)) - 65) + 1;
+            index = String.fromCharCode(65 + index - 1);
+            index = rotor_map.indexOf(index) + 1;
+            //console.log('index: ' + index);
 
-           if (index < 1)
-               index += 26;
-           if (index > 26)
-               index %= 26;
-           obj.letter = String.fromCharCode(65 + index - 1);
-           
-       }
+            if (rotorName === 1)
+                obj.proc.rev_rr = String.fromCharCode(65 + index - 1);
+            if (rotorName === 2)
+                obj.proc.rev_mr = String.fromCharCode(65 + index - 1);
+            if (rotorName === 3)
+                obj.proc.rev_lr = String.fromCharCode(65 + index - 1);
+
+            index -= b;
+            index += (ring_setting);
+
+            if (index < 1)
+                index += 26;
+            if (index > 26)
+                index %= 26;
+            obj.letter = String.fromCharCode(65 + index - 1);
+
+            if (rotorName === 1)
+                obj.proc.rev_out_r = obj.letter;
+            if (rotorName === 2)
+                obj.proc.rev_out_m = obj.letter;
+            if (rotorName === 3)
+                obj.proc.rev_out_l = obj.letter;
+        }
        return obj;
     }
     
