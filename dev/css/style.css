@@ -549,7 +549,7 @@ a.tip {
         .pb_cover_v2,
         .pb_cover_v3,
         .pb_cover_v4 {
-            height: 1500vh;
+            height: 1000vh;
             text-align: center !important;
             padding: 30em 5em;
         }
