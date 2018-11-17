@@ -1,4 +1,4 @@
-﻿import { Enigma } from './enigma.js';
+import { Enigma } from './enigma.js';
 
 var path = require('path');
 const express = require('express');
@@ -26,16 +26,36 @@ app.post('/setPlugBoard', (req, res) => {
 app.post('/initEnigma', (req, res) => {
     let plugBoard = req.body.plugBoard;
     let rotors = req.body.rotors;
+
+    let proc = {
+        rr: "",
+        rl: "",
+        out_r: "",
+        mr: "",
+        ml: "",
+        out_m: "",
+        lr: "",
+        ll: "",
+        out_l: "",
+        text: ""
+    };
+    let obj = {
+        letter: "",
+        proc: proc
+    };
     let input_string = req.body.plainText;
     console.log(rotors);
     let enigmaMachine = new Enigma(rotors, plugBoard);
 
-    let encrypted_message = enigmaMachine.inputValidation(input_string);
+    obj = enigmaMachine.inputValidation(input_string, obj);
+    //let encrypted_message = enigmaMachine.inputValidation(input_string, obj);
     console.log(rotors);
-    console.log(encrypted_message);
+    console.log(obj.proc);
+    console.log(obj.proc.text);
 
     res.json({
-        encryptedMessage: encrypted_message,
+        encryptedMessage: obj.proc.text,
+        proc: obj.proc,
         note: true
     });
 });
