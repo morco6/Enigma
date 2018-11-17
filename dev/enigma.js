@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 import { Rotor } from './rotor.js';
 import { PlugBoard } from './plugboard.js';
 import { Reflector } from './reflector.js';
@@ -33,7 +33,7 @@ export class Enigma {
 
 
     /* -check validation of input and starting process- */
-    inputValidation(input) {
+    inputValidation(input, obj) {
 
         if (input === "")
             throw new Error('The input can not be empty!');
@@ -44,25 +44,27 @@ export class Enigma {
         let output = "";
 
         input_arr.forEach((word) => {
-            let enc_word = "";
+            //let enc_word = "";
             for (let i = 0; i < word.length; i++) {
                 console.log(word[i]);
                 if (valid_input.indexOf(word[i]) === -1)
                     throw new Error(`The character ${word[i]} in: ${word} is not allowed!`);
 
-                enc_word += this.process_letter(word[i]);
+                obj = this.process_letter(word[i], obj);
+                obj.proc.text += obj.letter;
             }
-            output_arr.push(enc_word);
+            output_arr.push(obj.proc.text);
         });
 
         output = output_arr.toString();
         output = output.replace(/,/g, ' ');
-        return output;
+        obj.proc.text = output;
+        return obj;
     }
 
-    process_letter(letter) {
+    process_letter(letter, obj) {
 
-        
+        obj.letter = letter;
             
         // iterate machine - switch from starting position
         this.rotors = this.rotor.iterator(this.rotors);
@@ -72,26 +74,26 @@ export class Enigma {
         //////////////////////
 
         // plugboard
-        letter = this.plugboard.shift(this.plugBoard, letter, true);
+        obj.letter = this.plugboard.shift(this.plugBoard, obj.letter, true);
  
 
         // rotor 1
-        letter = this.rotor.shift(this.rotors.rotor_1, letter, true);
+        obj = this.rotor.shift(this.rotors.rotor_1, obj, true, 1);
    
-        //console.log('1: ' + letter);
+        console.log('1: ' + letter);
 
         // rotor 2
-        letter = this.rotor.shift(this.rotors.rotor_2, letter, true);
+        obj = this.rotor.shift(this.rotors.rotor_2, obj, true, 2);
 
-        //console.log('2: ' + letter);
+        console.log('2: ' + letter);
 
         // rotor 3
-        letter = this.rotor.shift(this.rotors.rotor_3, letter, true);
+        obj = this.rotor.shift(this.rotors.rotor_3, obj, true, 3);
 
-        //console.log('3: ' + letter);
+        console.log('3: ' + letter);
 
         // reflector
-        letter = this.reflector.reflect(letter);
+        obj.letter = this.reflector.reflect(obj.letter);
 
         //console.log('ref: ' + letter);
 
@@ -100,26 +102,26 @@ export class Enigma {
         /////////////////////////////////////////////
         
         // rotor 3
-        letter = this.rotor.shift(this.rotors.rotor_3, letter, false);
+        obj = this.rotor.shift(this.rotors.rotor_3, obj, false, 3);
 
         //console.log('3back: ' + letter);
 
         // rotor 2
-        letter = this.rotor.shift(this.rotors.rotor_2, letter, false);
+        obj = this.rotor.shift(this.rotors.rotor_2, obj, false, 2);
 
         //console.log('2back: ' + letter);
 
         // rotor 1
-        letter = this.rotor.shift(this.rotors.rotor_1, letter, false);
+        obj = this.rotor.shift(this.rotors.rotor_1, obj, false, 1);
 
         //console.log('1back: ' + letter);
 
         // plugboard
-        letter = this.plugboard.shift(this.plugBoard, letter, false);
+        obj.letter = this.plugboard.shift(this.plugBoard, obj.letter, false);
 
         //console.log('+=FINAL LETTER=: ' + letter);
         
-        return letter;
+        return obj;
     }
 
 
