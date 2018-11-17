@@ -8,6 +8,13 @@
   font-style: normal; }
 
 
+
+
+connection {
+    border: 1px solid #b51c29;
+    border-radius: 30px;
+}
+
     .panel .slidedown .glyphicon, .chat .glyphicon {
         margin-right: 5px;
     }
@@ -521,16 +528,19 @@ a.tip {
 .pb_cover_v3,
 .pb_cover_v4 {
   position: relative;
-  height: 120vh; }
+  height: 120vh;
+}
   @media (max-width: 767px) {
     .pb_cover,
     .pb_cover_v1,
     .pb_cover_v2,
     .pb_cover_v3,
     .pb_cover_v4 {
-      height: inherit;
+      height: 850vh;
       text-align: center !important;
-      padding: 6em 0; } }
+      padding: 30em 5em;
+
+    } }
   .pb_cover > .container,
   .pb_cover_v1 > .container,
   .pb_cover_v2 > .container,
@@ -542,7 +552,7 @@ a.tip {
     .pb_cover_v2 > .container > .row,
     .pb_cover_v3 > .container > .row,
     .pb_cover_v4 > .container > .row {
-      height: 95vh; }
+      height: 120vh; }
       @media (max-width: 767px) {
         .pb_cover > .container > .row,
         .pb_cover_v1 > .container > .row,
@@ -862,7 +872,8 @@ a.tip {
   box-shadow: 1px 11px 68px -20px rgba(0, 0, 0, 0.75); }
   @media (max-width: 991px) {
     .pb_form_v1 {
-      padding: 30px; } }
+      padding: 30px; }
+  }
 
 input, select, textarea {
   font-weight: 300;
