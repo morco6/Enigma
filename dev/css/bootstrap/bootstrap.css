@@ -116,8 +116,15 @@ address {
 ol,
 ul,
 dl {
-  margin-top: 0;
-  margin-bottom: 1rem; }
+    margin-top: 0;
+    margin-bottom: 1rem;
+    list-style-type: none;
+    margin: 0;
+    padding: 10px;
+    display: inline-block;
+    *display: inline;
+    zoom: 1
+}
 
 ol ol,
 ul ul,
