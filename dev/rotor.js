@@ -1,4 +1,4 @@
-﻿import { Translator } from './translator.js';
+import { Translator } from './translator.js';
 
 const _rotors = new WeakMap();
 
@@ -52,12 +52,12 @@ export class Rotor extends Translator {
         return letter;
     }
     
-    p(letter, ring_offset, ring_setting, rotor_map) {//
+    p(obj, ring_offset, ring_setting, rotor_map, rotorName, direction) {//
 
-        //console.log('letter: ' + letter + ", ring_offset: " + ring_offset + ",ring_setting: " + ring_setting);
+        console.log('letter: ' + obj.letter + ", ring_offset: " + ring_offset + ",ring_setting: " + ring_setting);
         let b = ring_offset;   
         
-        let pos = ((letter.charCodeAt(0)) - 65) + 1;
+        let pos = ((obj.letter.charCodeAt(0)) - 65) + 1;
         let new_letter = b + pos;
         
 
@@ -67,11 +67,21 @@ export class Rotor extends Translator {
         
         if (new_letter < 1)
             new_letter += 26;
-        
+        let tmp = String.fromCharCode(64 + new_letter);
+
+        if (direction) {
+            if (rotorName === 1)
+                obj.proc.rr = tmp;
+            if (rotorName === 2)
+                obj.proc.mr = tmp;
+            if (rotorName === 3)
+                obj.proc.lr = tmp;
+        }
         new_letter = rotor_map[new_letter - 1];
 
-        //console.log('new letter: ' + new_letter);
-        return new_letter;
+        console.log('new letter: ' + new_letter);
+        obj.letter = new_letter
+        return obj;
     }
 
     p2(letter, ring_offset, ring_setting) {
@@ -89,35 +99,49 @@ export class Rotor extends Translator {
             new_letter %= 26;
         
         new_letter = String.fromCharCode(65 + new_letter - 1);
-
+        console.log('new letter: ' + new_letter);
         return new_letter;
     }
 
         /* -shift rotor include reverse- */
-   shift(rotor, letter, direction) {
+    shift(rotor, obj, direction, rotorName) {
+
        let rotor_map = this.rotors[rotor.type].map;
        let new_letter = false;
        
        let ring_setting = rotor.setting;//2
        let ring_offset = rotor.ring_offset;//V=22
 
-       if (direction) {
-           letter = this.p(letter, ring_offset, ring_setting, rotor_map);
-           new_letter = this.p2(letter, ring_offset, ring_setting);
-           
-       }
+        if (direction) {
+            obj = this.p(obj, ring_offset, ring_setting, rotor_map, rotorName, direction);
+            if (rotorName === 1)
+                obj.proc.rl = obj.letter;
+            if (rotorName === 2)
+                obj.proc.ml = obj.letter;
+            if (rotorName === 3)
+                obj.proc.ll = obj.letter;
+
+            new_letter = this.p2(obj.letter, ring_offset, ring_setting);
+            if (rotorName === 1)
+                obj.proc.out_r = new_letter;
+            if (rotorName === 2)
+                obj.proc.out_m = new_letter;
+            if (rotorName === 3)
+                obj.proc.out_l = new_letter;
+            obj.letter = new_letter;
+        }
        else {//reverse
            let b = ring_offset; 
-           new_letter = this.p(letter, ring_offset, ring_setting, rotor_map);
-           //console.log('reverse: ' + new_letter);
-           let p = rotor_map.indexOf(new_letter) + 1;
+           obj = this.p(obj, ring_offset, ring_setting, rotor_map, rotorName);
+           console.log('reverse: ' + obj.letter);
+           let p = rotor_map.indexOf(obj.letter) + 1;
 
-           //console.log('p: ' + p);
+           console.log('p: ' + p);
            let index = String.fromCharCode(65 + p - 1);
            index = ((index.charCodeAt(0)) - 65) + 1;
            index = String.fromCharCode(65 + index - 1);
            index = rotor_map.indexOf(index)+1;
-           //console.log('index: ' + index);
+           console.log('index: ' + index);
 
            index -= b;
            index += (ring_setting);
@@ -126,10 +150,10 @@ export class Rotor extends Translator {
                index += 26;
            if (index > 26)
                index %= 26;
-           new_letter = String.fromCharCode(65 + index - 1);
+           obj.letter = String.fromCharCode(65 + index - 1);
            
        }
-       return new_letter;
+       return obj;
     }
     
     
