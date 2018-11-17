@@ -441,7 +441,7 @@
 
                 console.log(rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText);
                 console.log($scope.plugBoardArray);
-
+                plainText = plainText.toUpperCase();
                 $http({
                     url: '/initEnigma',
                     method: "POST",
