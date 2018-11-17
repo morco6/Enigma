@@ -523,14 +523,14 @@ pre {
 @media(min-width: 300px) {
     @media (max-width: 600px ) {
         .down {
-            padding-top: 35%;
+            padding-top: 45%;
         }
     }
 } 
 @media(min-width: 100px) {
     @media (max-width: 400px ) {
         .down {
-            padding-top: 50%;
+            padding-top: 60%;
         }
     }
 } 
