@@ -513,9 +513,28 @@ pre {
         padding-top: 30%;
     }
   }
-  @media (min-width: 768px) {
-    .container {
-      max-width: 720px; } }
+@media(min-width: 600px) {
+    @media (max-width: 767px ) {
+        .down {
+            padding-top: 20%;
+        }
+    }
+}
+@media(min-width: 300px) {
+    @media (max-width: 600px ) {
+        .down {
+            padding-top: 35%;
+        }
+    }
+} 
+@media(min-width: 100px) {
+    @media (max-width: 400px ) {
+        .down {
+            padding-top: 50%;
+        }
+    }
+} 
+
   @media (min-width: 992px) {
     .container {
       max-width: 960px; } }
