@@ -530,11 +530,6 @@ a.tip {
   position: relative;
   height: 120vh;
 }
-@media (max-width: 676px) {
-    .pb_cover_v3 {
-        height: 800vh;
-    }
-}
 @media(min-width: 100px) {
     @media (max-width: 400px ) {
         .pb_cover_v3 {
@@ -555,8 +550,21 @@ a.tip {
         }
     }
 }
+@media(min-width: 600px) {
+    @media (max-width: 700px) {
+        .pb_cover,
+        .pb_cover_v1,
+        .pb_cover_v2,
+        .pb_cover_v3,
+        .pb_cover_v4 {
+            height: 1800vh;
+            text-align: center !important;
+            padding: 30em 5em;
+        }
+    }
+}
 @media(min-width: 400px) {
-    @media (max-width: 767px) {
+    @media (max-width: 599px) {
         .pb_cover,
         .pb_cover_v1,
         .pb_cover_v2,
@@ -569,6 +577,20 @@ a.tip {
     }
 }
 @media(min-width: 600px) {
+    @media (max-width: 699px) {
+        .pb_cover,
+        .pb_cover_v1,
+        .pb_cover_v2,
+        .pb_cover_v3,
+        .pb_cover_v4 {
+            height: 500vh;
+            text-align: center !important;
+            padding: 30em 5em;
+        }
+    }
+}
+
+@media(min-width: 700px) {
     @media (max-width: 850px) {
         .pb_cover,
         .pb_cover_v1,
