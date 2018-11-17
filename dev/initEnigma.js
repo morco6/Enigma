@@ -28,6 +28,7 @@ app.post('/initEnigma', (req, res) => {
     let rotors = req.body.rotors;
 
     let proc = {
+        pb: "",
         rr: "",
         rl: "",
         out_r: "",
@@ -37,6 +38,18 @@ app.post('/initEnigma', (req, res) => {
         lr: "",
         ll: "",
         out_l: "",
+
+        rev_rr: "",
+        rev_rl: "",
+        rev_out_r: "",
+        rev_mr: "",
+        rev_ml: "",
+        rev_out_m: "",
+        rev_lr: "",
+        rev_ll: "",
+        rev_out_l: "",
+
+        ref: "",
         text: ""
     };
     let obj = {
