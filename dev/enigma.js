@@ -75,7 +75,7 @@ export class Enigma {
 
         // plugboard
         obj.letter = this.plugboard.shift(this.plugBoard, obj.letter, true);
- 
+        obj.proc.pb = obj.letter;
 
         // rotor 1
         obj = this.rotor.shift(this.rotors.rotor_1, obj, true, 1);
@@ -94,7 +94,7 @@ export class Enigma {
 
         // reflector
         obj.letter = this.reflector.reflect(obj.letter);
-
+        obj.proc.ref = obj.letter;
         //console.log('ref: ' + letter);
 
         /////////////////////////////////////////////
