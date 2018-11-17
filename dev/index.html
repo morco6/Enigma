@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -18,8 +18,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.5.8/js/jsplumb.min.js"></script>
 
 
     <link rel="stylesheet" href="/styles/helpers.css">
@@ -42,8 +41,9 @@
     <section class="pb_cover_v3 overflow-hidden cover-bg-indigo cover-bg-opacity text-right pb_gradient_v3 pb_slant-light" style="padding-top: 8%" ng-controller="plugBoardController">
 
         <div class="container">
+
             <form>
-                <div class="row align-items-center justify-content-center">
+                <div id="form" class="row align-items-center justify-content-center">
                     <div class="container" style="padding-bottom: 30%;">
                         <div class="container" style="padding: 15px;">
                             <p>
@@ -55,12 +55,14 @@
                         <div class="row align-items-center justify-content-center">
                             <!--rotor1-->
                             <div class="col-sm">
+
                                 <div class="bg-white rounded pb_form_v1" style="padding-right: 18%;">
 
                                     <div class="row">
                                         <div class="col"><label class="my-1 mr-2" for="rotorRight" style="padding-top:7%;">רוטור ימני:</label></div>
                                         <div class="col">
                                             <select class="custom-select my-1 mr-sm-2" id="rotorRight" ng-model="rotorRight">
+
                                                 <option value="I">I</option>
                                                 <option value="II">II</option>
                                                 <option value="III">III</option>
@@ -74,23 +76,15 @@
                                     <div class="row">
                                         <div class="col"><label class="my-1 mr-2" for="rotorRightSetting" style="padding-top:7%;">ring setting:</label></div>
                                         <div class="col">
-                                            <select class="custom-select my-1 mr-sm-2" id="rotorRightSetting" ng-options="(sortBy.indexOf(selectedItem)+1) as selectedItem for selectedItem in sortBy" ng-model="rotorRightSetting"></select>
+                                            <select class="custom-select my-1 mr-sm-2" ng-model="rotorRightSetting" ng-options="(sortBy.indexOf(selectedItem)+1) as selectedItem for selectedItem in sortBy"></select>
                                         </div>
 
                                     </div>
 
                                     <div class="row">
-                                        <div class="col">
-                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
-                                                <li>{{letter}}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col">
-                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
-                                                <li>{{letter}}</li>
-                                            </ul>
-                                        </div>
-
+                                        <ul class="col-1" style="font-size: x-small;" id="{{letter+'r'}}" ng-repeat="letter in sortBy">
+                                            <li>{{letter}}</li>
+                                        </ul>
                                     </div>
 
                                     <div class="row">
@@ -100,8 +94,6 @@
                                         </div>
 
                                     </div>
-
-
 
 
 
@@ -135,17 +127,9 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col">
-                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
-                                                <li>{{letter}}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col">
-                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
-                                                <li>{{letter}}</li>
-                                            </ul>
-                                        </div>
-
+                                        <ul class="col-1" style="font-size: x-small;" id="{{letter+'m'}}" ng-repeat="letter in sortBy">
+                                            <li>{{letter}}</li>
+                                        </ul>
                                     </div>
 
                                     <div class="row">
@@ -186,17 +170,9 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col">
-                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
-                                                <li>{{letter}}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col">
-                                            <ul style="font-size: x-small; margin: 0px; padding-left: 20px;" ng-repeat="letter in sortBy">
-                                                <li>{{letter}}</li>
-                                            </ul>
-                                        </div>
-
+                                        <ul class="col-1" style="font-size: x-small;" id="{{letter+'l'}}" ng-repeat="letter in sortBy">
+                                            <li>{{letter}}</li>
+                                        </ul>
                                     </div>
 
                                     <div class="row">
@@ -229,9 +205,9 @@
                     </div>
 
                 </div>
-            
+
             </form>
-            
+
         </div>
 
         <!-- Modal -->
@@ -243,14 +219,14 @@
                         <h3 class="pt-5 mb-0 text-secondary">Plug Board</h3>
                         <span class="pb-1 text-muted"><small>הזן אות עבור כל פלאג שברצונך להחליף - 10 לכל היותר</small></span><br />
                         <span class="pb-1 text-muted"><small>אותיות קטנות יתורגמו לאותיות גדולות אוטומטית</small></span><br />
-                        
+
                         <form name="validPlugBoard">
 
                             <div class="row" style="padding-right: 5%;">
                                 <div class="col">
                                     <div class="row" style="padding-bottom: 2%;">
                                         <div class="col" style="padding-left: 30%;">I</div>
-                                        <div class="col"><input type="text" name="I"  ng-model="I" ></div>
+                                        <div class="col"><input type="text" name="I" ng-model="I"></div>
 
                                     </div>
                                     <div class="row" style="padding-bottom: 2%;">
@@ -338,6 +314,16 @@
     <script>
         window.app = angular.module('Enigma', []);
         app.controller('plugBoardController', function ($scope, $http) {
+            $scope.rotorRight = "III";
+            $scope.rotorMiddle = "II";
+            $scope.rotorLeft = "I";
+            $scope.rotorRightSetting = 1;
+            $scope.rotorMiddleSetting = 1;
+            $scope.rotorLeftSetting = 1;
+            $scope.rotorRightOffset = 22;
+            $scope.rotorMiddleOffset = 4;
+            $scope.rotorLeftOffset = 6;
+            $scope.proc = null;
 
             $scope.sortBy = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
             $scope.plugBoardArray = [];
@@ -348,7 +334,7 @@
                 if (pair === '')
                     $scope.excecute($scope.plugBoardArray);
                 else {
-                    
+
                     for (let x = 0; x < pair.length; x++) {
                         if (pair[x] !== undefined && (pair[x][0] === undefined || pair[x][1] === undefined || ((pair[x][0].toUpperCase().charCodeAt(0)) - 65) < 0 || ((pair[x][0].toUpperCase().charCodeAt(0)) - 65) > 25 || ((pair[x].toUpperCase()[1].charCodeAt(0)) - 65) < 0 || ((pair[x].toUpperCase()[1].charCodeAt(0)) - 65) > 25 || pair[x].length > 2)) {
                             alert(`הפרמטר ${pair[x]} שגוי - נסה שוב`);
@@ -360,11 +346,11 @@
                         }
                     }
                 }
-                
+
             };
             $scope.excecute = function (pb) {
                 console.log(pb);
-                
+
                 $http({
                     url: '/setPlugBoard',
                     method: "POST",
@@ -372,7 +358,7 @@
                         "plugBoard": pb
                     }
                 }).then(function (response) {
-                    
+
                     $scope.plugBoardDisplay = true;
                     if (response.data.plugBoard == [])
                         $scope.plugBoardDisplay = false;
@@ -381,9 +367,20 @@
                     function (response) {
                     });
             }
+
+            $scope.con = function (sourceLetter, targetLetter, position, instance) {
+                instance.connect({
+                    source: sourceLetter + position,
+                    target: targetLetter + position,
+                    endpoint: "Blank",
+                    anchors: ["Center", "Center"]
+
+                });
+            }
+
             $scope.encryptedMessage = 'כאן יופיע הטקסט לאחר הצפנה';
-            $scope.encrypt = function(rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText){
-                
+            $scope.encrypt = function (rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText) {
+
                 console.log(rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText);
                 console.log($scope.plugBoardArray);
 
@@ -401,6 +398,46 @@
                     }
                 }).then(function (response) {
                     $scope.encryptedMessage = response.data.encryptedMessage;
+                    $scope.proc = response.data.proc;
+
+                    jsPlumb.ready(function () {
+
+                        jsPlumb.Defaults.Overlays = [
+                            ["Arrow", {
+                                location: 1,
+                                id: "arrow",
+                                length: 10,
+                                width: 10,
+                                foldback: 0.1
+                            }]
+                        ];
+
+                        var instance = jsPlumb.getInstance();
+                        instance.importDefaults({
+                            Connector: ["Bezier", {
+                                curviness: 5
+                            }]
+                        });
+
+                        var instance1 = jsPlumb.getInstance();
+                        instance1.importDefaults({
+                            Connector: ["Bezier", {
+                                curviness: 5
+                            }]
+                        });
+
+                        var instance2 = jsPlumb.getInstance();
+                        instance2.importDefaults({
+                            Connector: ["Bezier", {
+                                curviness: 5
+                            }]
+                        });
+                        $scope.con($scope.proc.rr, $scope.proc.rl, 'r', instance);
+                        $scope.con($scope.proc.mr, $scope.proc.ml, 'm', instance1);
+                        $scope.con($scope.proc.lr, $scope.proc.ll, 'l', instance2);
+
+
+                    });
                 },
                     function (response) {
                     });
@@ -408,8 +445,11 @@
 
             }
         });
-        </script>
-
-
-</body >
+    </script>
+    <script>
+        
+        
+        
+    </script>
+</body>
 </html >
