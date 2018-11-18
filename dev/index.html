@@ -24,15 +24,23 @@
     <link rel="stylesheet" href="/styles/helpers.css">
     <link rel="stylesheet" href="/styles/style.css">
     <link rel="stylesheet" href="/styles/landing-2.css">
-
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </head>
 <body data-spy="scroll" data-target="#pb-navbar" data-offset="200" dir="rtl" ng-app="Enigma">
     <nav class="navbar navbar-expand-lg navbar-dark pb_navbar pb_scrolled-light" id="pb-navbar">
         <div class="container">
             <a class="navbar-brand" style="padding-bottom: 10%;"><img src="/styles/logo.png"><img /></a>
-            <div class="collapse navbar-collapse" id="probootstrap-navbar">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0" style="padding-top: 5%;"><a class="nav-link" href="http://morc.io/"><span class="pb_rounded-4 px-4" style="color: #fff">בטיחות תוכנה | עבודה 1 | מור כהן</span></a></li>
+            <div class="collapse navbar-collapse" id="probootstrap-navbar" style="min-width:600px;">
+                <ul class="navbar-nav mr-auto" style="padding-left:1%; padding-top:3%">
+                    
+                    <li style="padding-top: 10%; padding-left:5%; color: #fff" data-toggle="tooltip" data-placement="bottom" title="הנחיות לעבודה"><a target="_blank" rel="noopener noreferrer" href="https://www.docdroid.net/file/download/7h3JB3t/hw1-1.pdf"><i class="fas fa-file-pdf"></i></a></li>
+                    <li style="padding-top: 10%; padding-left:5%; color: #fff" data-toggle="tooltip" data-placement="bottom" title="אניגמה - ויקיפדיה"><a target="_blank" rel="noopener noreferrer" href="https://en.wikipedia.org/wiki/Enigma_machine"><i class="fab fa-wikipedia-w"></i></a></li>
+                    <li style="padding-top: 10%; color: #fff" data-toggle="tooltip" data-placement="bottom" title="כניסה לפרויקט בGitHub"><a target="_blank" rel="noopener noreferrer" href="https://github.com/morco6/Enigma"><i class="fab fa-github"></i></a></li>
+                    <li class="nav-item cta-btn ml-xl-2 ml-lg-2 ml-md-0 ml-sm-0 ml-0" style="padding-top: 5%;"><a class="nav-link" target="_blank" rel="noopener noreferrer" href="http://morc.io/"><span class="pb_rounded-4 px-4" style="color: #fff">בטיחות תוכנה | עבודה 1 | מור כהן</span></a></li>
                 </ul>
             </div>
         </div>
@@ -42,7 +50,7 @@
 
         <div class="container">
 
-            <form class="down">
+            <form name="Form" class="down">
                 <div id="form" class="row align-items-center justify-content-center">
                     <div class="container" style="padding-top: 5%;">
                         <div class="container" style="padding: 15px;">
@@ -249,11 +257,11 @@
                         <div class="row">
                             <div class="col-11">
                                 <div>
-                                    <input type="text" class="form-control mb-2" ng-model="plainText">
+                                    <input type="text" name="plainText" class="form-control mb-2" ng-model="plainText" required>
                                 </div>
                             </div>
                             <div class="col-1">
-                                <button type="submit" class="btn btn-primary mb-2" ng-click="encrypt(rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText)">הצפן</button>
+                                <button type="submit" class="btn btn-primary mb-2" ng-disabled="Form.plainText.$invalid" ng-click="encrypt(rotorRight, rotorRightSetting, rotorRightOffset, rotorMiddle, rotorMiddleSetting, rotorMiddleOffset, rotorLeft, rotorLeftSetting, rotorLeftOffset, plainText)">הצפן</button>
                             </div>
                         </div>
                         <div>
@@ -526,11 +534,6 @@
 
             }
         });
-    </script>
-    <script>
-        
-        
-        
     </script>
 </body>
 </html >
