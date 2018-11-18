@@ -44,7 +44,6 @@ export class Enigma {
         let output = "";
 
         input_arr.forEach((word) => {
-            //let enc_word = "";
             for (let i = 0; i < word.length; i++) {
                 console.log(word[i]);
                 if (valid_input.indexOf(word[i]) === -1)
@@ -79,23 +78,16 @@ export class Enigma {
 
         // rotor 1
         obj = this.rotor.shift(this.rotors.rotor_1, obj, true, 1);
-   
-        console.log('1: ' + letter);
 
         // rotor 2
         obj = this.rotor.shift(this.rotors.rotor_2, obj, true, 2);
 
-        console.log('2: ' + letter);
-
         // rotor 3
         obj = this.rotor.shift(this.rotors.rotor_3, obj, true, 3);
-
-        console.log('3: ' + letter);
 
         // reflector
         obj.letter = this.reflector.reflect(obj.letter);
         obj.proc.ref = obj.letter;
-        //console.log('ref: ' + letter);
 
         /////////////////////////////////////////////
         /* -returning from reflector to plugboard- */
@@ -104,22 +96,14 @@ export class Enigma {
         // rotor 3
         obj = this.rotor.shift(this.rotors.rotor_3, obj, false, 3);
 
-        //console.log('3back: ' + letter);
-
         // rotor 2
         obj = this.rotor.shift(this.rotors.rotor_2, obj, false, 2);
-
-        //console.log('2back: ' + letter);
 
         // rotor 1
         obj = this.rotor.shift(this.rotors.rotor_1, obj, false, 1);
 
-        //console.log('1back: ' + letter);
-
         // plugboard
         obj.letter = this.plugboard.shift(this.plugBoard, obj.letter, false);
-
-        //console.log('+=FINAL LETTER=: ' + letter);
         
         return obj;
     }
