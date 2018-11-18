@@ -45,7 +45,6 @@ export class Enigma {
 
         input_arr.forEach((word) => {
             for (let i = 0; i < word.length; i++) {
-                console.log(word[i]);
                 if (valid_input.indexOf(word[i]) === -1)
                     throw new Error(`The character ${word[i]} in: ${word} is not allowed!`);
 
