@@ -6,23 +6,22 @@ const app = express();
 const bodyParser = require('body-parser'); 
 var AsyncProfile = require('async-profile');
 app.use(express.static(path.join(__dirname, '/css'))); //public
-app.use("/styles", express.static(__dirname + '/css'));//allow css in invitation page (public)
+app.use("/styles", express.static(__dirname + '/css'));//allow css (public)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-
-
-
-
+///////////////////////////////////////////////////////
+/* -Init plugBoard- */
 app.post('/setPlugBoard', (req, res) => {
     let plugBoard = req.body.plugBoard;
-    
     res.json({
         plugBoard: plugBoard,
         note: true
     });
 });
 
+///////////////////////////////////////////////////////
+/* -Init and calculation the enigma machine- */
 app.post('/initEnigma', (req, res) => {
     let plugBoard = req.body.plugBoard;
     let rotors = req.body.rotors;
@@ -61,10 +60,6 @@ app.post('/initEnigma', (req, res) => {
     let enigmaMachine = new Enigma(rotors, plugBoard);
 
     obj = enigmaMachine.inputValidation(input_string, obj);
-    //let encrypted_message = enigmaMachine.inputValidation(input_string, obj);
-    console.log(rotors);
-    console.log(obj.proc);
-    console.log(obj.proc.text);
 
     res.json({
         encryptedMessage: obj.proc.text,
@@ -75,14 +70,15 @@ app.post('/initEnigma', (req, res) => {
 
 
 
-
+///////////////////////////////////////////////////////
+/* -listen to port using express- */
 const port = process.env.PORT || process.argv[2];
-//const port = process.env.PORT;
 app.listen(port, function () {
     console.log('listening to port: ' + port);
 });
 
-
+///////////////////////////////////////////////////////
+/* -response of index.html- */
 app.get('/', (req, res) => {
     res.sendFile('./index.html', { root: __dirname });
 });
